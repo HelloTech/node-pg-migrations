@@ -1,0 +1,43 @@
+{
+    "name": "node-pg-migrations",
+    "version": "0.0.3",
+    "private": false,
+    "scripts": {
+        "lint-staged": "lint-staged",
+        "lint": "./node_modules/.bin/eslint --ignore-path .gitignore -- lib",
+        "lint:watch": "node_modules/.bin/esw lib --watch --ignore-path .gitignore --cache --cache-location './tmp/linter' -- lib",
+        "start": "node-pg-migrations run",
+        "test": "DB_NAME='hellotech_test' jest",
+        "addMigration": "node-pg-migrations add",
+        "generate": "node-pg-migrations generate"
+    },
+    "bin": {
+        "node-pg-migrations": "bin/migration.js"
+    },
+    "pre-commit": [
+        "lint-staged",
+        "generate"
+    ],
+    "lint-staged": {
+        "src/**/*.js": "eslint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HelloTech/node-pg-migrations.git"
+    },
+    "dependencies": {
+        "lint-staged": "^8.1.5",
+        "path": "^0.12.7",
+        "pg": "^7.8.0",
+        "pre-commit": "^1.2.2",
+        "simple-git": "^1.107.0",
+        "yargs": "^13.2.2"
+    },
+    "devDependencies": {
+        "eslint": "^5.3.0",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-plugin-import": "^2.17.2",
+        "jest": "^24.0.0"
+    },
+    "license": "MIT"
+}
