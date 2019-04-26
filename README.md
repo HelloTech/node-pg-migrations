@@ -130,17 +130,34 @@ $ node-pg-migrations run --clear
 
 ## Generate
 
-The generate method generates new migrations based on git staged changes to functions/triggers/stored-procedures
+The generate method generates new migrations based on git staged changes to functions/triggers/stored-procedures.
 
 example:
 ```js
-// index.js
 const migrations = require('node-pg-migrations');
 migrations.generate();
 ```
 
+You can set up generate to run on every git commit by using the pre-commit service
+
+package.json example
+```json
+{
+    "name": "node-pg-migrations",
+    "version": "0.0.0",
+    "scripts": {
+        "generate": "node-pg-migrations generate"
+    },
+    "bin": {
+        "node-pg-migrations": "bin/migration.js"
+    },
+    "pre-commit": [
+        "generate"
+    ]
+}
+```
+
 ```bash
-#bash
 $ node-pg-migrations generate
 ```
 
