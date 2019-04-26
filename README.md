@@ -4,6 +4,8 @@
 </p>
 <br>
 
+[![NPM version][npm-image]][npm-url]
+
 ## Description :
 node-pg-migrations is setup to help devs setup and maintain PostgreSQL migrations
 
