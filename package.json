@@ -15,8 +15,7 @@
         "node-pg-migrations": "bin/migration.js"
     },
     "pre-commit": [
-        "lint-staged",
-        "generate"
+        "lint-staged"
     ],
     "lint-staged": {
         "src/**/*.js": "eslint"
