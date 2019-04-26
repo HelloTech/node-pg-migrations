@@ -4,7 +4,8 @@
 </p>
 <br>
 
-[![NPM version][npm-image]][npm-url]
+[![npm version](https://badge.fury.io/js/node-pg-migrations.svg)](https://badge.fury.io/js/node-pg-migrations)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description :
 node-pg-migrations is setup to help devs setup and maintain PostgreSQL migrations
