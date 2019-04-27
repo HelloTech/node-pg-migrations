@@ -1,5 +1,5 @@
 const migrate = require('./lib/migrate');
-const generate = require('./lib/generateProcedureMigrationFiles.js');
+const generate = require('./lib/generate.js');
 const add = require('./lib/addMigrationFile');
 const addNotifyTrigger = require('./lib/addNotifyTrigger');
 const init = require('./lib/initialMigrations');

@@ -1,6 +1,6 @@
 {
     "name": "node-pg-migrations",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "private": false,
     "scripts": {
         "lint-staged": "lint-staged",
@@ -12,7 +12,8 @@
         "generate": "node-pg-migrations generate"
     },
     "bin": {
-        "node-pg-migrations": "bin/migration.js"
+        "node-pg-migrations": "bin/migration.js",
+        "npg": "bin/migration.js"
     },
     "pre-commit": [
         "lint-staged"

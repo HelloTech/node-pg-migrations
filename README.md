@@ -1,4 +1,4 @@
-<h1 align="center"> Node PostgreSQL Migrations </h1>
+<h1 align="center"> Node PostgreSQL Migrations (NPG)</h1>
 <p align="center">
   <b >This is a node.js service for maintaining PostgreSQL migrations</b>
 </p>
@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description :
-node-pg-migrations is setup to help devs setup and maintain PostgreSQL migrations
+NPG is setup to help devs setup and maintain PostgreSQL migrations
 
 It gives you:
 
@@ -31,20 +31,9 @@ npm i node-pg-migrations --save
 const migrations = require('node-pg-migrations');
 const pg = require('pg');
 
-const configs = {
-    max: 5,
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: process.env.DB_PORT || 5432,
-    timezone: 'UTC',
-    user: process.env.DB_USERNAME || 'user_name',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME,
-    multipleStatements: true
-};
-
-const pool = new pg.Pool(configs);
+const pool = new pg.Pool();
 migrations.init();
-migrations.run('./migrations', pool, false).then(function(){
+migrations.run(pool).then(function(){
         console.log('done');
     }).catch(function(err){
         console.log('err: ', err);
@@ -55,22 +44,57 @@ migrations.run('./migrations', pool, false).then(function(){
 
 ```bash
 #bash
-$ node-pg-migrations init
-$ node-pg-migrations run
+$ npg init
+$ npg run
 ```
 
 Run the example above with `--help` to see the help for the application.
 
 ## Documentation :
+- [Bash](#bash)
 - [Init](#init)
 - [Run](#run)
 - [Generate](#generate)
 - [Add](#add)
 - [AddNotifyTrigger](#addnotifytrigger)
 
+## Bash
+
+```bash
+Usage: npg <command> [options]
+
+Commands:
+  npg run                                   Run pending migrations
+  npg init                                  Initial migration generation based
+                                            on added/modified/deleted functions
+                                            and stored procedures
+  npg generate                              Generate migrations based on
+                                            added/modified/deleted functions and
+                                            stored procedures
+  npg add <fileName>                        Add new migration
+  npg add_notify_trigger <tableName>        Add notify trigger
+  [triggerName]
+
+Options:
+  --version             Show version number                            [boolean]
+  -p, --proceduresPath  Procedures directory path        [default: "procedures"]
+  -f, --functionsPath   Functions directory path          [default: "functions"]
+  -t, --triggersPath    Triggers directory path            [default: "triggers"]
+  -m, --migrationsPath  Migrations directory path        [default: "migrations"]
+  -c, --clear           Clear migrations table before running          [boolean]
+  -h, --help            Show help                                      [boolean]
+```
+
+
+
 ## Init
 
 The init method runs through all functions/triggers/stored-procedures and creates insert migrations for them.
+- `options`(optional):
+    - `proceduresPath`: Procedures directory path relative to project root, default 'procedures'
+    - `functionsPath`: 'Functions directory path relative to project root, default 'functions'
+    - `triggersPath`:  'Triggers directory path relative to project root, default 'triggers'
+    - `migrationsPath`: Migrations directory path relative to project root, default 'migrations'
 
 example:
 ```js
@@ -81,35 +105,25 @@ migrations.init();
 
 ```bash
 #bash
-$ node-pg-migrations init
+$ npg init
 ```
 
 ## Run
 
 The run method executes the migrations in the migrations folder.
-The method takes three params:
-- `directoryName`: The directory where the migrations are saved
+The method takes two params:
 - `pool`: A PostgreSQL pool object
-- `clear`: If set to true the method will run all migration regardless of if they've been run or not
+- `options(optional)`:
+    - `migrationsPath`: Migrations directory path relative to project root, default 'migrations'
+    - `clear`: If set to true the method will run all migration regardless of if they've been run or not
 
 example:
 ```js
 const migrations = require('node-pg-migrations');
 const pg = require('pg');
 
-const configs = {
-    max: 5,
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: process.env.DB_PORT || 5432,
-    timezone: 'UTC',
-    user: process.env.DB_USERNAME || 'user_name',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME,
-    multipleStatements: true
-};
-
-const pool = new pg.Pool(configs);
-migrations.run('./migrations', pool, false).then(function(){
+const pool = new pg.Pool();
+migrations.run(pool, {migrationsPath: 'migrations', clear: false}).then(function(){
         console.log('done');
     }).catch(function(err){
         console.log('err: ', err);
@@ -120,17 +134,23 @@ migrations.run('./migrations', pool, false).then(function(){
 
 ```bash
 #run new migrations
-$ node-pg-migrations run
+$ npg run
+$ npg run './migrations'
 ```
 
 ```bash
 #run all migrations
-$ node-pg-migrations run --clear
+$ npg run --clear
 ```
 
 ## Generate
 
-The generate method generates new migrations based on git staged changes to functions/triggers/stored-procedures.
+The generate method generates new migrations based on git staged changes to functions/triggers/stored-procedures. It takes the param.
+- `options`(optional):
+    - `proceduresPath`: Procedures directory path relative to project root, default 'procedures'
+    - `functionsPath`: 'Functions directory path relative to project root, default 'functions'
+    - `triggersPath`:  'Triggers directory path relative to project root, default 'triggers'
+    - `migrationsPath`: Migrations directory path relative to project root, default 'migrations'
 
 example:
 ```js
@@ -158,13 +178,15 @@ package.json example
 ```
 
 ```bash
-$ node-pg-migrations generate
+$ npg generate
 ```
 
 ## Add
 
-The add method adds a new migration file. It takes a filename as a param. If the filename has an extension of `.sql` it creates a blank sql file.
-If the filename has an extension of `.js` it creates a js file with the expected js format.
+The add method adds a new migration file. It takes the param.
+- `options`:
+    - `filename`: If the filename has an extension of `.sql` it creates a blank sql file. If the filename has an extension of `.js` it creates a js file with the expected js format.
+    - `migrationsPath`(optional): Migrations directory path relative to project root, default 'migrations'
 ```js
 module.exports = function(pool){
     const sql = '';
@@ -181,14 +203,17 @@ migrations.add('newMigration.js');
 ```
 
 ```bash
-$ node-pg-migrations add 'migration.sql'
+$ npg add 'migration.sql'
 ```
 
 ## AddNotifyTrigger
 
 The addNotifyTrigger method generates a notify function and trigger for the provided table name. It takes two params:
-- `tableName`: The name of the table to which the trigger will be added.
-- `triggerName`: This will default to `${tableName}_after_insert_update_delete_trigger`. But if the name is over 63 chars you will have to provide an alternate name.
+It takes the param.
+- `options`:
+    - `tableName`: The name of the table to which the trigger will be added.
+    - `triggerName`(optional): This will default to `${tableName}_after_insert_update_delete_trigger`. But if the name is over 63 chars you will have to provide an alternate name.
+    - `triggersPath`(optional): 'Triggers directory path relative to project root, default 'triggers'
 
 example:
 ```js
@@ -197,5 +222,5 @@ migrations.addNotifyTrigger('users');
 ```
 
 ```bash
-$ node-pg-migrations addNotifyTrigger users users_insert_trigger
+$ npg addNotifyTrigger users users_insert_trigger
 ```
