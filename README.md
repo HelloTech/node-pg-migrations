@@ -51,12 +51,24 @@ $ npg run
 Run the example above with `--help` to see the help for the application.
 
 ## Documentation :
+- [Env](#env)
 - [Bash](#bash)
 - [Init](#init)
 - [Run](#run)
 - [Generate](#generate)
 - [Add](#add)
 - [AddNotifyTrigger](#addnotifytrigger)
+
+## Env
+
+This package uses the same env variables as the node-postgres program
+```bash
+PGHOST='localhost'
+PGUSER=process.env.USER
+PGDATABASE=process.env.USER
+PGPASSWORD=null
+PGPORT=5432
+```
 
 ## Bash
 
