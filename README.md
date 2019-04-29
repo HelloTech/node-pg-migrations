@@ -1,6 +1,7 @@
+<h2 align="center"> Warning! This package is still in alpha</h2>
 <h1 align="center"> Node PostgreSQL Migrations (NPG)</h1>
 <p align="center">
-  <b >This is a node.js service for maintaining PostgreSQL migrations</b>
+  <b >This is a node.js service for generating and maintaining PostgreSQL migrations</b>
 </p>
 <br>
 
