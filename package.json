@@ -7,7 +7,7 @@
         "lint": "./node_modules/.bin/eslint --ignore-path .gitignore -- lib",
         "lint:watch": "node_modules/.bin/esw lib --watch --ignore-path .gitignore --cache --cache-location './tmp/linter' -- lib",
         "start": "node-pg-migrations run",
-        "test": "jest",
+        "test": "jest --verbose",
         "addMigration": "node-pg-migrations add",
         "generate": "node-pg-migrations generate"
     },
