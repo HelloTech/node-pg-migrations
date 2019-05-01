@@ -1,17 +1,17 @@
 #! /usr/bin/env node
 const pg = require('pg');
 const yargs = require('yargs');
-const migrate = require('../lib/migrate');
-const generate = require('../lib/generate.js');
-const init = require('../lib/initialMigrations.js');
-const add = require('../lib/addMigrationFile');
-const addNotifyTrigger = require('../lib/addNotifyTrigger');
+const migrate = require('../lib/migrate').run;
+const generate = require('../lib/generate.js').generate;
+const init = require('../lib/initialMigrations.js').init;
+const add = require('../lib/addMigrationFile').add;
+const addNotifyTrigger = require('../lib/addNotifyTrigger').addNotifyTrigger;
 
 const emptyBuilder = () => {};
 
 const execRun = function(argv){
     const pool = new pg.Pool();
-    migrate.run(pool, argv).then(function(){
+    migrate(pool, argv).then(function(){
         console.log('done');
     }).catch(function(err){
         console.log('err: ', err);

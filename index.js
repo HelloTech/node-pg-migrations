@@ -1,8 +1,8 @@
-const migrate = require('./lib/migrate');
-const generate = require('./lib/generate.js');
-const add = require('./lib/addMigrationFile');
-const addNotifyTrigger = require('./lib/addNotifyTrigger');
-const init = require('./lib/initialMigrations');
+const migrate = require('./lib/migrate').run;
+const generate = require('./lib/generate.js').generate;
+const add = require('./lib/addMigrationFile').add;
+const addNotifyTrigger = require('./lib/addNotifyTrigger').addNotifyTrigger;
+const init = require('./lib/initialMigrations').init;
 
 module.exports = {
     migrate,
