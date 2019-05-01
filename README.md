@@ -168,7 +168,11 @@ The generate method generates new migrations based on git staged changes to func
 example:
 ```js
 const migrations = require('node-pg-migrations');
-migrations.generate();
+migrations.generate().then(function(){
+    console.log('done');
+}).catch(function(err){
+    console.log('err: ', err)
+});
 ```
 
 You can set up generate to run on every git commit by using the pre-commit service
@@ -211,8 +215,16 @@ module.exports = function(pool){
 example:
 ```js
 const migrations = require('node-pg-migrations');
-migrations.add('migration.sql');
-migrations.add('newMigration.js');
+migrations.add('migration.sql').then(function(){
+   console.log('done');
+}).catch(function(err){
+   console.log('err: ', err)
+});
+migrations.add('newMigration.js').then(function(){
+    console.log('done');
+ }).catch(function(err){
+    console.log('err: ', err)
+ });
 ```
 
 ```bash
@@ -231,7 +243,11 @@ It takes the param.
 example:
 ```js
 const migrations = require('node-pg-migrations');
-migrations.addNotifyTrigger('users');
+migrations.addNotifyTrigger('users').then(function(){
+    console.log('done');
+}).catch(function(err){
+    console.log('err: ', err)
+});
 ```
 
 ```bash
