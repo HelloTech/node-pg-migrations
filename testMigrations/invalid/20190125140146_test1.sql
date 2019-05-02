@@ -1,1 +1,1 @@
-INSERT INTO orders (idd) VALUES ('test1');
+INSERT INTO node_pg_migration_test (idd) VALUES ('test1');

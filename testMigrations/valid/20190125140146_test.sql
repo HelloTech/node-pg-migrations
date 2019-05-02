@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS orders;
-create table orders
+DROP TABLE IF EXISTS node_pg_migration_test;
+create table node_pg_migration_test
 (
     id VARCHAR(255) null,
-    constraint orders_id_pk
+    constraint node_pg_migration_test_id_pk
         primary key (id)
 );
-INSERT INTO orders (id) VALUES ('test');
+INSERT INTO node_pg_migration_test (id) VALUES ('test');
