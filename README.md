@@ -251,5 +251,5 @@ migrations.addNotifyTrigger('users').then(function(){
 ```
 
 ```bash
-$ npg addNotifyTrigger users users_insert_trigger
+$ npg add_notify_trigger users users_insert_trigger
 ```
